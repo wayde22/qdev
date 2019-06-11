@@ -38,8 +38,7 @@ class App extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => ({ 
-  // reduxState: state
+const mapStateToProps = (state) => ({
   foo: state.foo,
   whiz: state.whiz,
   some: state.some,
