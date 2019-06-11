@@ -1,7 +1,7 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import { CHANGE_WHIZ_TO_BANG, CHANGE_BAR_TO_RANDOM, CHANGE_SOMETHING} from './actions' // must import these from you actions.js file to keep from mispelling errors
+import { changeNumber, changeWhiz, changeSome} from './actions' // must import these from you actions.js file to keep from mispelling errors
 
 import { connect } from 'react-redux'; // Using the connect function that comes with react-redux, you can plug any component into Redux’s store and pull out the data it needs.
 
@@ -9,15 +9,15 @@ import { connect } from 'react-redux'; // Using the connect function that comes 
 class App extends React.Component {
 
   handleClick = () => {
-    this.props.dispatch({ type: CHANGE_BAR_TO_RANDOM, payload: Math.floor(Math.random() * 100)}) //this.props.dispatch({ type: 'CHANGE_BAR_TO_RANDOM', payload: Math.floor(Math.random() * 100)})
+    this.props.changeNumber();
   }
 
   handleWhizClick = () => {
-    this.props.dispatch({ type: CHANGE_WHIZ_TO_BANG, payload: 'Bang!!!'})
+    this.props.changeWhiz();
   }
 
   handleSomeClick = () => {
-    this.props.dispatch({ type: CHANGE_SOMETHING, payload: 'WOW!!!'})
+    this.props.changeSome();
   }
   
   render() {
@@ -25,21 +25,31 @@ class App extends React.Component {
       <div className="App">
 
         <button onClick={this.handleClick}> Click </button>
-        <div>{this.props.reduxState.foo}</div>
+        <div>{this.props.foo}</div>
         
         <button onClick={this.handleWhizClick}>Whiz</button>
-        <div>{this.props.reduxState.whiz}</div>
+        <div>{this.props.whiz}</div>
 
         <button onClick={this.handleSomeClick}> Something </button>
-        <div>{this.props.reduxState.some}</div>
+        <div>{this.props.some}</div>
 
       </div>
     );
   }
 }
 
-const mapStateToProps = (state) => ({ // state is the whole state of Redux
-  reduxState: state
+const mapStateToProps = (state) => ({ 
+  // reduxState: state
+  foo: state.foo,
+  whiz: state.whiz,
+  some: state.some,
+
 })
 
-export default connect(mapStateToProps)(App);
+const mapDispatchToProps = (dispatch) => ({
+  changeNumber: () => dispatch(changeNumber()),
+  changeWhiz: () => dispatch(changeWhiz()),
+  changeSome: () => dispatch(changeSome()),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

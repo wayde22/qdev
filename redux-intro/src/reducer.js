@@ -1,3 +1,5 @@
+import { CHANGE_WHIZ_TO_BANG, CHANGE_BAR_TO_RANDOM, CHANGE_SOMETHING} from './actions' // must import these from you actions.js file to keep from mispelling errors
+
 
 const initialState = {
   foo: 'Random Number',
@@ -8,11 +10,11 @@ const initialState = {
 export const reducer = (state = initialState, action) => { // The store needs to be initialized before its ran the first time or it will break
   
   switch(action.type) {
-    case 'CHANGE_BAR_TO_RANDOM':
+    case CHANGE_BAR_TO_RANDOM:
       return {...state, foo: action.payload};
-    case 'CHANGE_WHIZ_TO_BANG':
+    case CHANGE_WHIZ_TO_BANG:
       return {...state, whiz: action.payload};
-    case 'CHANGE_SOMETHING':
+    case CHANGE_SOMETHING:
       return {...state, some: action.payload};
     default:
       return state;
