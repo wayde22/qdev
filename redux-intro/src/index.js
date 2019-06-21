@@ -3,10 +3,10 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-
 import { createStore } from 'redux'; //This is added for Redux
 import { Provider } from 'react-redux'; //This is added for Redux to wrap around the components
 import { reducer } from './reducer' //This is added for Redux
+
 
 const store = createStore(reducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()); //This is added for Redux, the window object is for the Redux Dev Tools
 

@@ -1,0 +1,84 @@
+.App {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  background-color: rgb(224, 215, 215);
+  height: 100vh;
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 40vmin;
+  pointer-events: none;
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+.row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  
+}
+
+.productContainer {
+  display: flex;
+  flex-direction: column;
+  min-width: 100px;
+  margin: 5px;
+  border-radius: 5px;
+
+}
+
+.cartContainer {
+  display: flex;
+  flex-direction: column;
+  min-width: 100px;
+  border: 1px solid blue;
+  margin: 5px;
+  border-radius: 5px;
+}
+
+.cartContainer2 {
+  display: flex;
+  flex-direction: column;
+  min-width: 100px;
+  border: 1px solid blue;
+  margin: 5px;
+  border-radius: 5px;
+  width:200px;
+  margin: auto;
+}
+
+.corner {
+  display: flex;
+  flex-direction: column;
+  width: 100px;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid blue;
+}
