@@ -21,7 +21,8 @@ class App extends React.Component {
         <User
           userStats={this.props.userStats}
         />
-        <button onClick={ () => this.handleUserShot() } > Shoot </button>
+
+        <button className='shootButton' onClick={ () => this.handleUserShot() } > Shoot </button>
   
         <Opponent 
           oppStats={this.props.oppStats}

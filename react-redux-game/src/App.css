@@ -52,13 +52,37 @@
 }
 
 .userStats {
-  display: flex;
-  flex-direction: column;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 150px;
+  border: 2px solid blue;
+  margin-left: 150px;
+  margin-top: 20px;
+  padding:5px;
 }
 
 .opponentStats {
-  display: flex;
-  flex-direction: column;
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 150px;
+  border: 2px solid blue;
+  margin-right: 150px;
+  margin-top: 20px;
+  padding:5px;
+
+}
+
+.shootButton {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 75px;
+  margin-left: 650px;
+  margin-bottom: 20px;
+  padding: 3px;
+  border-radius: 4px;
 }
 
 

@@ -1,6 +1,7 @@
 import {CHANGE_USER_STATS, ON_PLAYER_SHOT, ON_OPPONENT_SHOT} from './action'
 
 const initialUserStats = {
+  player: 'me',
   experience: 3,
   attack: 4,
   defense: 3,
