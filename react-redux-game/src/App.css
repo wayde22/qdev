@@ -56,10 +56,11 @@
   top: 0;
   left: 0;
   width: 150px;
-  border: 2px solid blue;
+  border: 2px solid darkgrey;
   margin-left: 150px;
   margin-top: 20px;
   padding:5px;
+  border-radius: 4px;
 }
 
 .opponentStats {
@@ -67,10 +68,12 @@
   top: 0;
   right: 0;
   width: 150px;
-  border: 2px solid blue;
+  border: 2px solid darkgray;
   margin-right: 150px;
   margin-top: 20px;
   padding:5px;
+  border-radius: 4px;
+
 
 }
 
