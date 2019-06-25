@@ -118,7 +118,7 @@ export const reducer = (state = intialState, action) => {
     case ON_PLAYER_NAME:
       return {
         ...state,
-        userStats: {player: action.payload }
+        userStats: {...state.userStats, player: action.payload }
       }
 
     case ON_NAME_ENTERED:
