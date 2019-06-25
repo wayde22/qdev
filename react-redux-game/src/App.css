@@ -34,6 +34,7 @@
 
 .container {
   background-color: lightgrey;
+  /* background-image: url('DarkDesertNight.png'); */
   height: 100vh;
   padding: 10px;
 }
@@ -61,6 +62,7 @@
   margin-top: 20px;
   padding:5px;
   border-radius: 4px;
+  font-weight: bold;
 }
 
 .opponentStats {
@@ -73,8 +75,7 @@
   margin-top: 20px;
   padding:5px;
   border-radius: 4px;
-
-
+  font-weight: bold;
 }
 
 .shootButton {
@@ -83,7 +84,18 @@
   left: 0;
   width: 75px;
   margin-left: 650px;
-  margin-bottom: 20px;
+  margin-bottom: 80px;
+  padding: 3px;
+  border-radius: 4px;
+}
+
+.textField {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 75px;
+  margin-left: 600px;
+  margin-top: 100px;
   padding: 3px;
   border-radius: 4px;
 }

@@ -1,11 +1,11 @@
-import {CHANGE_USER_STATS, ON_PLAYER_SHOT, ON_OPPONENT_SHOT} from './action'
+import {CHANGE_USER_STATS, ON_PLAYER_SHOT, ON_OPPONENT_SHOT, ON_PLAYER_NAME, ON_NAME_ENTERED } from './action'
 
 const initialUserStats = {
-  player: 'me',
+  player: '',
   experience: 3,
   attack: 4,
   defense: 3,
-  hitpoints: 20
+  hitpoints: 1
   }
 
 const listOpponentStats = [
@@ -20,6 +20,9 @@ const intialState = {
   userStats: initialUserStats,
   oppStats: listOpponentStats[0],
   currentOpponentIndex: 0,
+  displayInputName: true,
+  playerWins: false,
+  opponentWins: false,
 }
 
 const updateOpponent = (oppStats, newOpponentHitPoints) => {
@@ -53,6 +56,7 @@ const levelUp = (stats, hitpoints) => {
     hitpoints: hitpoints + 5
   }
 }
+
 
 const experienceFactor = (experience, attack) => {
   let accuracyHitpoints;
@@ -90,24 +94,37 @@ export const reducer = (state = intialState, action) => {
       const newOpponentHitPoints = oppStats.hitpoints - calculateDamage( experienceFactor(oppStats.experience, userStats.attack), oppStats.defense ) 
       const opponentIndex = isDead(newOpponentHitPoints) ? state.currentOpponentIndex + 1 : state.currentOpponentIndex
       const nextOpponent = isDead(newOpponentHitPoints) ? pickOpponent(listOpponentStats, opponentIndex) : updateOpponent(oppStats, newOpponentHitPoints)
-      const levelUpPoints = isDead(newOpponentHitPoints) ? levelUp(userStats, userStats.hitpoints) : userStats
+      const userLevelUpPoints = isDead(newOpponentHitPoints) ? levelUp(userStats, userStats.hitpoints) : userStats
       console.log(`Updated-- hitpoints: ${newOpponentHitPoints} / current index: ${state.currentOpponentIndex} / calced index: ${opponentIndex}  /nextOpponent hitpoints: ${oppStats.hitpoints} / damage: ${calculateDamage( experienceFactor(oppStats.experience, userStats.attack), oppStats.defense )}`)
       
       return {
         ...state,
         oppStats: nextOpponent,
         currentOpponentIndex: opponentIndex,
-        userStats: levelUpPoints,
+        userStats: userLevelUpPoints,
       }
 
     case ON_OPPONENT_SHOT:
       const newUserHitPoints = state.userStats.hitpoints - calculateDamage( experienceFactor(state.userStats.experience, state.oppStats.attack), state.userStats.defense )
-      // const userWinOrLose = isDead(newUserHitPoints) ? console.log('You Lose') : updateOpponent(state.userStats, newUserHitPoints)
-
+      // const userWinOrLose = isDead(newUserHitPoints) ? console.log('You Lose') : console.log('You win)
+      const opponentLevelUpPoints = isDead(newUserHitPoints) ? levelUp(state.oppStats, state.oppStats.hitpoints) : state.oppStats
       console.log(`Updated hitpoints ${state.userStats.hitpoints} + defense ${state.userStats.defense} - attack: ${state.oppStats.attack} newUserHitPoints, ${newUserHitPoints}`)
       return {
         ...state,
-        userStats: updateOpponent(state.userStats, newUserHitPoints)
+        userStats: updateOpponent(state.userStats, newUserHitPoints),
+        oppStats: opponentLevelUpPoints,
+      }
+    
+    case ON_PLAYER_NAME:
+      return {
+        ...state,
+        userStats: {player: action.payload }
+      }
+
+    case ON_NAME_ENTERED:
+      return {
+        ...state,
+        displayInputName: false
       }
      
 

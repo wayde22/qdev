@@ -19,17 +19,20 @@ class App extends React.Component {
       chocolate: '',
     };
   }
+  
   handleClick = () => {
     this.setState(state => ({
       isToggleOn: !state.isToggleOn
     }));
   }
+
   handleChange = (event, stateKey) => {
       this.setState({
         ...this.state,
         [stateKey]: event.target.value
       });
    }
+
   handleEnterPress = (event) => {
     if (event.key === 'Enter') {
       this.setState({
@@ -42,6 +45,7 @@ class App extends React.Component {
       });
     }
   }
+
   handleSubmit = (event, stateKey, input) => {
     alert(`Sumited: ${input}`);
     this.setState({
@@ -50,6 +54,7 @@ class App extends React.Component {
     });
     event.preventDefault();
   }
+
   render() {
     return (
       <div className="App">
