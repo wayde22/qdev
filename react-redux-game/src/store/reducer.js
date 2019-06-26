@@ -25,6 +25,10 @@ const intialState = {
   opponentWins: false,
 }
 
+// const messages = [
+//   { id: 1, message:  }
+// ]
+
 const updateOpponent = (oppStats, newOpponentHitPoints) => {
   return {
     ...oppStats, 
@@ -95,7 +99,6 @@ export const reducer = (state = intialState, action) => {
       const opponentIndex = isDead(newOpponentHitPoints) ? state.currentOpponentIndex + 1 : state.currentOpponentIndex
       const nextOpponent = isDead(newOpponentHitPoints) ? pickOpponent(listOpponentStats, opponentIndex) : updateOpponent(oppStats, newOpponentHitPoints)
       const userLevelUpPoints = isDead(newOpponentHitPoints) ? levelUp(userStats, userStats.hitpoints) : userStats
-      console.log(`Updated-- hitpoints: ${newOpponentHitPoints} / current index: ${state.currentOpponentIndex} / calced index: ${opponentIndex}  /nextOpponent hitpoints: ${oppStats.hitpoints} / damage: ${calculateDamage( experienceFactor(oppStats.experience, userStats.attack), oppStats.defense )}`)
       
       return {
         ...state,
@@ -106,9 +109,9 @@ export const reducer = (state = intialState, action) => {
 
     case ON_OPPONENT_SHOT:
       const newUserHitPoints = state.userStats.hitpoints - calculateDamage( experienceFactor(state.userStats.experience, state.oppStats.attack), state.userStats.defense )
-      // const userWinOrLose = isDead(newUserHitPoints) ? console.log('You Lose') : console.log('You win)
       const opponentLevelUpPoints = isDead(newUserHitPoints) ? levelUp(state.oppStats, state.oppStats.hitpoints) : state.oppStats
-      console.log(`Updated hitpoints ${state.userStats.hitpoints} + defense ${state.userStats.defense} - attack: ${state.oppStats.attack} newUserHitPoints, ${newUserHitPoints}`)
+      // const userWinOrLose = isDead(newUserHitPoints) ? console.log('You Lose') : console.log('You win)
+
       return {
         ...state,
         userStats: updateOpponent(state.userStats, newUserHitPoints),
@@ -127,8 +130,6 @@ export const reducer = (state = intialState, action) => {
         displayInputName: false
       }
      
-
-
     default:
     return state;
   }
