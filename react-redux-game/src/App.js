@@ -39,7 +39,6 @@ class App extends React.Component {
         <User
           userStats={this.props.userStats}
         />
-
         <button className='shootButton' onClick={ () => this.handleUserShot() } > Go </button>
   
         <Opponent 

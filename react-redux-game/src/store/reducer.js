@@ -21,13 +21,9 @@ const intialState = {
   oppStats: listOpponentStats[0],
   currentOpponentIndex: 0,
   displayInputName: true,
-  playerWins: false,
+  playerMessage: '',
   opponentWins: false,
 }
-
-// const messages = [
-//   { id: 1, message:  }
-// ]
 
 const updateOpponent = (oppStats, newOpponentHitPoints) => {
   return {
@@ -53,11 +49,12 @@ const randomFire = (attack) => {
   return Math.floor(Math.random() * (attack + 1))
 }
 
-const levelUp = (stats, hitpoints) => {
+const levelUp = (stats, hitpoints, experience) => {
   console.log(`stats: ${stats} hitpoints: ${hitpoints}`)
   return {
     ...stats,
-    hitpoints: hitpoints + 5
+    hitpoints: hitpoints + 5,
+    experience: experience + 1,
   }
 }
 
@@ -81,10 +78,12 @@ const experienceFactor = (experience, attack) => {
       accuracyHitpoints = Math.ceil(randomFire(attack) * 1)
       return accuracyHitpoints
     default:
-      accuracyHitpoints = Math.ceil(randomFire(attack) * .2)
+      accuracyHitpoints = Math.ceil(randomFire(attack) * 1)
       return accuracyHitpoints  
   } 
 }
+
+
 
 
 export const reducer = (state = intialState, action) => {
@@ -98,13 +97,15 @@ export const reducer = (state = intialState, action) => {
       const newOpponentHitPoints = oppStats.hitpoints - calculateDamage( experienceFactor(oppStats.experience, userStats.attack), oppStats.defense ) 
       const opponentIndex = isDead(newOpponentHitPoints) ? state.currentOpponentIndex + 1 : state.currentOpponentIndex
       const nextOpponent = isDead(newOpponentHitPoints) ? pickOpponent(listOpponentStats, opponentIndex) : updateOpponent(oppStats, newOpponentHitPoints)
-      const userLevelUpPoints = isDead(newOpponentHitPoints) ? levelUp(userStats, userStats.hitpoints) : userStats
-      
+      const userLevelUpPoints = isDead(newOpponentHitPoints) ? levelUp(userStats, userStats.hitpoints, userStats.experience) : userStats
+      const winningMessage = isDead(newOpponentHitPoints) ? console.log('You Won!! Opponents HP: ', oppStats.hitpoints, ' + Def: ', oppStats.defense, ' - userStats attack: ', userStats.attack) : console.log('OppStats HP: ', oppStats.hitpoints, ' + Def: ',oppStats.defense, ' - attack: ', (oppStats.hitpoints + oppStats.defense) - userStats.attack)
+
       return {
         ...state,
         oppStats: nextOpponent,
         currentOpponentIndex: opponentIndex,
         userStats: userLevelUpPoints,
+        playerMessage: playerStatusMessages,
       }
 
     case ON_OPPONENT_SHOT:
