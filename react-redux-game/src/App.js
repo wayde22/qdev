@@ -1,11 +1,12 @@
 import React from 'react';
 import './App.css';
 import { connect } from 'react-redux'
-import { changeUserName, changeUserStats, createOnPlayerShot, createOnOpponentShot, createOnPlayerName, createOnNameEntered} from './store/action'
+import { changeUserName, changeUserStats, createOnPlayerShot, createOnOpponentShot, createOnPlayerName, createOnNameEntered, createOnPlayerStatusMessage} from './store/action'
 import User from './components/User'
 import Opponent from './components/Opponent'
 import NameInput from './components/NameInput'
-import Messages from './components/Messages'
+import UserMessage from './components/UserMessage'
+import OpponentMessage from './components/OpponentMessage'
 
 class App extends React.Component {
 
@@ -22,6 +23,10 @@ class App extends React.Component {
     if(event.key === 'Enter') {
       this.props.onNameEntered()
     }
+  }
+
+  handlePlayerStatusMessage = () => {
+    this.props.onPlayerStatusMessage()
   }
 
 
@@ -45,9 +50,13 @@ class App extends React.Component {
           oppStats={this.props.oppStats}
         />
 
-        {/* <Messages
-          messages={this.props.messages}
-        /> */}
+        <UserMessage
+          userStats={'this.props.userStats'}
+        />
+
+        <OpponentMessage
+          oppStats={this.props.oppStats}
+        />
       </div>
     );
   }

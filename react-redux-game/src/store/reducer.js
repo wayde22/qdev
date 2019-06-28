@@ -5,15 +5,16 @@ const initialUserStats = {
   experience: 3,
   attack: 4,
   defense: 3,
-  hitpoints: 1
+  hitpoints: 1,
+  message: '',
   }
 
 const listOpponentStats = [
-  {character: 'rat', experience: 3, attack: 2, defense: 1, hitpoints: 2},
-  {character: 'goblin', experience: 2, attack: 2, defense: 2, hitpoints: 2},
-  {character: 'gremlin', experience: 3, attack: 3, defense: 3, hitpoints: 3},
-  {character: 'troll', experience: 4, attack: 4, defense: 4, hitpoints: 4},
-  {character: 'Dragon', experience: 5, attack: 5, defense: 5, hitpoints: 5}, 
+  {character: 'Rat', experience: 3, attack: 2, defense: 1, hitpoints: 2, message: ''},
+  {character: 'Goblin', experience: 2, attack: 2, defense: 2, hitpoints: 2, message: ''},
+  {character: 'Gremlin', experience: 3, attack: 3, defense: 3, hitpoints: 3, message: ''},
+  {character: 'Troll', experience: 4, attack: 4, defense: 4, hitpoints: 4, message: ''},
+  {character: 'Dragon', experience: 5, attack: 5, defense: 5, hitpoints: 5, message: ''}, 
 ]
 
 const intialState = {
@@ -21,9 +22,8 @@ const intialState = {
   oppStats: listOpponentStats[0],
   currentOpponentIndex: 0,
   displayInputName: true,
-  playerMessage: '',
-  opponentWins: false,
 }
+
 
 const updateOpponent = (oppStats, newOpponentHitPoints) => {
   return {
@@ -50,7 +50,6 @@ const randomFire = (attack) => {
 }
 
 const levelUp = (stats, hitpoints, experience) => {
-  console.log(`stats: ${stats} hitpoints: ${hitpoints}`)
   return {
     ...stats,
     hitpoints: hitpoints + 5,
@@ -83,7 +82,22 @@ const experienceFactor = (experience, attack) => {
   } 
 }
 
-
+const statusMessages = (status, character) => {
+  console.log('status', status)
+  switch(status) {
+    case 0:
+      status = 'Your dead... Next!!'
+      return status
+    case 1:
+      status = 'You Win'
+      return status
+    case 2:
+      status = 'You got hit'
+      return status
+    default:
+      return 'Huh?... Something went wrong!'
+  }
+}
 
 
 export const reducer = (state = intialState, action) => {
@@ -98,25 +112,29 @@ export const reducer = (state = intialState, action) => {
       const opponentIndex = isDead(newOpponentHitPoints) ? state.currentOpponentIndex + 1 : state.currentOpponentIndex
       const nextOpponent = isDead(newOpponentHitPoints) ? pickOpponent(listOpponentStats, opponentIndex) : updateOpponent(oppStats, newOpponentHitPoints)
       const userLevelUpPoints = isDead(newOpponentHitPoints) ? levelUp(userStats, userStats.hitpoints, userStats.experience) : userStats
-      const winningMessage = isDead(newOpponentHitPoints) ? console.log('You Won!! Opponents HP: ', oppStats.hitpoints, ' + Def: ', oppStats.defense, ' - userStats attack: ', userStats.attack) : console.log('OppStats HP: ', oppStats.hitpoints, ' + Def: ',oppStats.defense, ' - attack: ', (oppStats.hitpoints + oppStats.defense) - userStats.attack)
+      const opponentStatusMessage = isDead(newOpponentHitPoints) ? statusMessages(0, oppStats.character) : statusMessages(2)
 
+      console.log('Status message: ',opponentStatusMessage, '/ Hit: ', (oppStats.hitpoints + oppStats.defense) - userStats.attack, '/ OP HP: ', oppStats.hitpoints, ' / User Attack: ', userStats.attack)
+      
       return {
         ...state,
         oppStats: nextOpponent,
         currentOpponentIndex: opponentIndex,
         userStats: userLevelUpPoints,
-        playerMessage: playerStatusMessages,
+        oppStats: {...nextOpponent, message: opponentStatusMessage}
       }
 
     case ON_OPPONENT_SHOT:
       const newUserHitPoints = state.userStats.hitpoints - calculateDamage( experienceFactor(state.userStats.experience, state.oppStats.attack), state.userStats.defense )
       const opponentLevelUpPoints = isDead(newUserHitPoints) ? levelUp(state.oppStats, state.oppStats.hitpoints) : state.oppStats
-      // const userWinOrLose = isDead(newUserHitPoints) ? console.log('You Lose') : console.log('You win)
+      // const userStatusMessage = isDead(newUserHitPoints) ? statusMessages(0, oppStats.character) : statusMessages(2)
+      // console.log('userMess: ',userStatusMessage)
 
       return {
         ...state,
         userStats: updateOpponent(state.userStats, newUserHitPoints),
         oppStats: opponentLevelUpPoints,
+        // userStats: {...state.userStats, message: userStatusMessage}
       }
     
     case ON_PLAYER_NAME:

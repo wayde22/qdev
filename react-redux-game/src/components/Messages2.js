@@ -1,5 +1,6 @@
+// Not being used at this time....
 import React from 'react'
-import Message from './Message'
+import Message from './Messages'
 
  const Messages = ({ messages }) => {
     return (
