@@ -34,29 +34,45 @@ class App extends React.Component {
   
     return (
       <div className='container'>
-        {this.props.displayInputName ?
-        <NameInput 
-          onNameChange={(name) => { this.handlePlayerName(name) }}
-          onKeyDown={this.handleNameEnter}
-        /> :
-        null}
+      
+        <div className='playerStats'>
+          <User
+            userStats={this.props.userStats}
+          />
+          
+          <Opponent 
+            oppStats={this.props.oppStats}
+          />
+        </div> 
+
+        <div className='NameInput'>
+          {this.props.displayInputName ?
+          <NameInput 
+            onNameChange={(name) => { this.handlePlayerName(name) }}
+            onKeyDown={this.handleNameEnter}
+          /> :
+          null}
+        </div>
+
+        <div className='playerMessages'>
+          <UserMessage
+            userStats={this.props.userStats}
+          />
+
+          <OpponentMessage
+            oppStats={this.props.oppStats}
+          />
+        </div>
         
-        <User
-          userStats={this.props.userStats}
-        />
-        <button className='shootButton' onClick={ () => this.handleUserShot() } > Go </button>
-  
-        <Opponent 
-          oppStats={this.props.oppStats}
-        />
+        <div className='playerMessages'>
+          <div> <img src={this.props.userStats.image}/> </div>
+          <div> <img src={this.props.oppStats.image}/> </div>
+        </div>
 
-        <UserMessage
-          userStats={'this.props.userStats'}
-        />
+        <div className='buttonDiv'>
+          <button className='shootButton' onClick={ () => this.handleUserShot() } > Go </button>
+        </div>
 
-        <OpponentMessage
-          oppStats={this.props.oppStats}
-        />
       </div>
     );
   }

@@ -4,13 +4,15 @@ body {
 }
 
 .container {
+  display: flex;
+  flex-direction: column;
   color: white;
   background-position-y: 100px;
   height: 100vh;
   padding: 10px;
 }
 
-.container2 {
+/* .container2 {
   background-color: lightgrey;
   height: 100vh;
   flex-direction: column;
@@ -21,15 +23,12 @@ body {
   background-color: lightgrey;
   height: 100vh;
   flex-direction: row;
-}
+} */
 
 .userStats {
-  position: fixed;
-  top: 0;
-  left: 0;
   width: 165px;
+  height: 225px;
   border: 2px solid darkgrey;
-  margin-left: 150px;
   margin-top: 20px;
   padding:5px;
   border-radius: 4px;
@@ -37,59 +36,75 @@ body {
 }
 
 .opponentStats {
-  position: fixed;
-  top: 0;
-  right: 0;
   width: 165px;
+  height: 225px;
   border: 2px solid darkgray;
-  margin-right: 150px;
   margin-top: 20px;
   padding:5px;
   border-radius: 4px;
   font-weight: bold;
-}
+} 
 
 .shootButton {
-  position: fixed;
-  bottom: 0;
-  left: 0;
   width: 75px;
-  margin-left: 650px;
   margin-bottom: 80px;
   padding: 3px;
   border-radius: 4px;
 }
 
-.textField {
+.buttonDiv {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  margin-top: 300px;
+}
+
+/* .textField {
   display: flex;
   justify-content: center;
   /* position: fixed;
   top: 0;
   left: 0;
   width: 75px;
-  margin-left: 600px; */
+  margin-left: 600px;
   margin-top: 300px;
   padding: 3px;
   border-radius: 4px;
-}
+} */
 
 .inputNameField {
   border-radius: 5px;
-}
+} 
 
 .userMessage {
-  display: flex;
-  justify-content: flex-start;
-  align-items: flex-end;
-  margin-top: 0px;
-}
-
-.opponentMessage {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 300px;
+  
+  margin-top: 20px;
+  /* align-items: flex-end; */
   font-weight: bold;
   font-size: 30px;
 }
 
+.opponentMessage {
+  margin-top: 20px;
+  font-weight: bold;
+  font-size: 30px;
+} 
 
+.NameInput {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.playerStats {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.playerMessages {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 100px;
+}

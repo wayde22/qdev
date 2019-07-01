@@ -1,4 +1,10 @@
 import {CHANGE_USER_STATS, ON_PLAYER_SHOT, ON_OPPONENT_SHOT, ON_PLAYER_NAME, ON_NAME_ENTERED } from './action'
+import rat from './../images/Rat.jpeg'
+import goblin from './../images/goblin.jpeg'
+import gremlin from './../images/gremlin.jpeg'
+import troll from './../images/troll.jpeg'
+import dragon from './../images/dragon.jpeg'
+import stickman from './../images/stickman.png'
 
 const initialUserStats = {
   player: '',
@@ -7,14 +13,15 @@ const initialUserStats = {
   defense: 3,
   hitpoints: 1,
   message: '',
+  image: stickman,
   }
 
 const listOpponentStats = [
-  {character: 'Rat', experience: 3, attack: 2, defense: 1, hitpoints: 2, message: ''},
-  {character: 'Goblin', experience: 2, attack: 2, defense: 2, hitpoints: 2, message: ''},
-  {character: 'Gremlin', experience: 3, attack: 3, defense: 3, hitpoints: 3, message: ''},
-  {character: 'Troll', experience: 4, attack: 4, defense: 4, hitpoints: 4, message: ''},
-  {character: 'Dragon', experience: 5, attack: 5, defense: 5, hitpoints: 5, message: ''}, 
+  {character: 'Rat', experience: 3, attack: 2, defense: 1, hitpoints: 2, message: '', image: rat },
+  {character: 'Goblin', experience: 2, attack: 2, defense: 2, hitpoints: 2, message: '', image: goblin },
+  {character: 'Gremlin', experience: 3, attack: 3, defense: 3, hitpoints: 3, message: '', image: gremlin },
+  {character: 'Troll', experience: 4, attack: 4, defense: 4, hitpoints: 4, message: '', image: troll },
+  {character: 'Dragon', experience: 5, attack: 5, defense: 5, hitpoints: 5, message: '', image: dragon }, 
 ]
 
 const intialState = {
@@ -25,10 +32,11 @@ const intialState = {
 }
 
 
-const updateOpponent = (oppStats, newOpponentHitPoints) => {
+const updateOpponent = (oppStats, newOpponentHitPoints, message) => {
   return {
     ...oppStats, 
-    hitpoints: newOpponentHitPoints
+    hitpoints: newOpponentHitPoints,
+    message
   };
 }
 
@@ -86,13 +94,13 @@ const statusMessages = (status, character) => {
   console.log('status', status)
   switch(status) {
     case 0:
-      status = 'Your dead... Next!!'
+      status = character + ' lost...'
       return status
     case 1:
-      status = 'You Win'
+      status = character + ' Wins!!'
       return status
     case 2:
-      status = 'You got hit'
+      status = character + ' took a hit!'
       return status
     default:
       return 'Huh?... Something went wrong!'
@@ -112,8 +120,8 @@ export const reducer = (state = intialState, action) => {
       const opponentIndex = isDead(newOpponentHitPoints) ? state.currentOpponentIndex + 1 : state.currentOpponentIndex
       const nextOpponent = isDead(newOpponentHitPoints) ? pickOpponent(listOpponentStats, opponentIndex) : updateOpponent(oppStats, newOpponentHitPoints)
       const userLevelUpPoints = isDead(newOpponentHitPoints) ? levelUp(userStats, userStats.hitpoints, userStats.experience) : userStats
-      const opponentStatusMessage = isDead(newOpponentHitPoints) ? statusMessages(0, oppStats.character) : statusMessages(2)
-
+      const opponentStatusMessage = isDead(newOpponentHitPoints) ? statusMessages(0, oppStats.character) : userStats.hitpoints <= 0 ? statusMessages(1, oppStats.character) : statusMessages(2, oppStats.character)
+      
       console.log('Status message: ',opponentStatusMessage, '/ Hit: ', (oppStats.hitpoints + oppStats.defense) - userStats.attack, '/ OP HP: ', oppStats.hitpoints, ' / User Attack: ', userStats.attack)
       
       return {
@@ -121,20 +129,22 @@ export const reducer = (state = intialState, action) => {
         oppStats: nextOpponent,
         currentOpponentIndex: opponentIndex,
         userStats: userLevelUpPoints,
-        oppStats: {...nextOpponent, message: opponentStatusMessage}
+        oppStats: {...nextOpponent, message: opponentStatusMessage},
       }
 
     case ON_OPPONENT_SHOT:
       const newUserHitPoints = state.userStats.hitpoints - calculateDamage( experienceFactor(state.userStats.experience, state.oppStats.attack), state.userStats.defense )
       const opponentLevelUpPoints = isDead(newUserHitPoints) ? levelUp(state.oppStats, state.oppStats.hitpoints) : state.oppStats
-      // const userStatusMessage = isDead(newUserHitPoints) ? statusMessages(0, oppStats.character) : statusMessages(2)
-      // console.log('userMess: ',userStatusMessage)
+      
+      const userStatusMessage = isDead(newUserHitPoints) ? statusMessages(0, state.userStats.player) : state.oppStats.hitpoints <= 0 ? statusMessages(1, state.userStats.player) : statusMessages(2, state.userStats.player) //<----
+      // console.log('userMess: ',userStatusMessage, '/ newUserHP: ', newUserHitPoints)
 
       return {
         ...state,
-        userStats: updateOpponent(state.userStats, newUserHitPoints),
+        userStats: updateOpponent(state.userStats, newUserHitPoints, userStatusMessage),
         oppStats: opponentLevelUpPoints,
-        // userStats: {...state.userStats, message: userStatusMessage}
+        
+        // userStats: { ...state.userStats, message: userStatusMessage} //<----
       }
     
     case ON_PLAYER_NAME:
