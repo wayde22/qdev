@@ -49,8 +49,7 @@ const isDead  = (newOpponentHitPoints) => {
 }
 
 const calculateDamage = (attack, def) => {
-  let damage = null;
-  return damage = Math.round(attack * attack / (attack + def))
+  return Math.round(attack * attack / (attack + def))
 }
 
 const randomFire = (attack) => {

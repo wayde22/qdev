@@ -70,7 +70,7 @@ class App extends React.Component {
         </div>
 
         <div className='buttonDiv'>
-          <button className='shootButton' onClick={ () => this.handleUserShot() } > Go </button>
+          <button className='shootButton' onClick={ () => this.handleUserShot() } > FIGHT </button>
         </div>
 
       </div>
