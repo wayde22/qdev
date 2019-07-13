@@ -26,7 +26,7 @@ public class AddressService {
         timeZoneQoute.put("PacificToMountain", new BigDecimal("1000.00"));
     }
 
-    public void printTimeZoneQuote(Address address) {
+    public void printAddress(Address address) {
 
     }
 

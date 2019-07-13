@@ -25,7 +25,6 @@ public class Main {
         List<Address> address2 = Arrays.asList(new Address("345 Front", "Chicago", "IL", "Cook", "66326"));
         List<Address> address3 = Arrays.asList(new Address("678 Second", "Oklahoma City", "OK", "Oky", "98493"));
 
-//        addressService.printTimeZoneQuote();
     }
 
 
